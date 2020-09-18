@@ -17,9 +17,9 @@ function objToSql(ob) {
     let value = ob[key];
     if (Object.hasOwnProperty.call(ob, key)) {
       if (typeof value === "string" && value.indexOf(" ") >= 0) {
-        value = "'" + value + "'";
+        value = `'${value}'`;
       }
-      arr.push(key + "=" + value);
+      arr.push(`${key}=${value}`);
     }
   }
 
@@ -37,14 +37,16 @@ const orm = {
     });
   },
   insertOne: function (table, cols, vals, cb) {
-    let queryString = "INSERT INTO " + table;
+    let questionMarks = printQuestionMarks(vals.length);
+    let c = cols.toString();
+    let queryString = `INSERT INTO ${table} (${c}) VALUES (${questionMarks})`;
 
-    queryString += " (";
-    queryString += cols.toString();
-    queryString += ") ";
-    queryString += "VALUES (";
-    queryString += printQuestionMarks(vals.length);
-    queryString += ") ";
+    // queryString += " (";
+    // queryString += cols.toString();
+    // queryString += ") ";
+    // queryString += "VALUES (";
+    // queryString += 
+    // queryString += ") ";
 
     console.log(queryString);
 
@@ -58,7 +60,7 @@ const orm = {
   },
 
   updateOne: function (table, objColVals, condition, cb) {
-    var queryString = `UPDATE ${table}`;
+    let queryString = `UPDATE ${table}`;
 
     queryString += " SET ";
     queryString += objToSql(objColVals);
