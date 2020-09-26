@@ -3,6 +3,7 @@ const connection = require("./connection.js");
 const orm = {
   selectAll: function (tableInput, cb) {
     let queryString = `SELECT * FROM ${tableInput};`;
+    
     connection.query(queryString, function (err, result) {
       if (err) {
         throw err;
@@ -24,10 +25,10 @@ const orm = {
     });
   },
   updateOne: function (table, burgerId, cb) {
-    console.log(`Orm updateOne test ${burgerId}`); // remove later
     let queryString = `UPDATE ${table} SET devoured=1 WHERE id=${burgerId}`;
 
     console.log(queryString);
+
     connection.query(queryString, function (err, result) {
       if (err) {
         throw err;

@@ -5,7 +5,7 @@ const router = express.Router();
 const burger = require("../models/burger.js");
 
 router.get("/", function (req, res) {
-  res.redirect("/burgers")
+  res.redirect("/burgers");
 });
 
 router.get("/burgers", function (req, res) {
@@ -28,7 +28,7 @@ router.post("/burgers/create", function (req, res) {
 router.put("/burgers/:id", function (req, res) {
   burger.updateOne(req.params.id, function (result) {
     console.log(result);
-    res.redirect("/");
+    res.sendStatus(200);
   });
 });
 
