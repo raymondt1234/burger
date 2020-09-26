@@ -1,25 +1,5 @@
 const connection = require("./connection.js");
 
-function printQuestionMarks(num) {
-  let arr = [];
-
-  for (let i = 0; i < num; i++) {
-    arr.push("?");
-  }
-
-  return arr.toString();
-}
-
-function objToSql(ob) {
-  let arr = [];
-
-  for (let key in ob) {
-    arr.push(`${key}=${ob[key]}`);
-  }
-
-  return arr.toString();
-}
-
 const orm = {
   selectAll: function (tableInput, cb) {
     let queryString = `SELECT * FROM ${tableInput};`;
@@ -31,7 +11,6 @@ const orm = {
     });
   },
   insertOne: function (table, cols, vals, cb) {
-    console.log(`${table} ${cols} ${vals}`); //for testing delete later
     let queryString = `INSERT INTO ${table} (${cols}) VALUES ('${vals}')`;
 
     console.log(queryString);
@@ -44,9 +23,9 @@ const orm = {
       cb(result);
     });
   },
-  updateOne: function (table, objColVals, condition, cb) {
-    let sqlItem = objToSql(objColVals);
-    let queryString = `UPDATE ${table} SET ${sqlItem} WHERE ${condition}`;
+  updateOne: function (table, burgerId, cb) {
+    console.log(`Orm updateOne test ${burgerId}`); // remove later
+    let queryString = `UPDATE ${table} SET devoured=1 WHERE id=${burgerId}`;
 
     console.log(queryString);
     connection.query(queryString, function (err, result) {
