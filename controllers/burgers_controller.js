@@ -18,11 +18,16 @@ router.get("/burgers", function (req, res) {
 });
 
 router.post("/burgers/create", function (req, res) {
-  let burgerPost = req.body.burger_name;
-  burger.insertOne("burger_name", burgerPost, function (result) {
-    console.log(result);
+  let newBurger = req.body.burger_name;
+
+  if (newBurger.length > 0) {
+    burger.insertOne("burger_name", newBurger, function (result) {
+      console.log(result);
+      res.redirect("/");
+    });
+  } else {
     res.redirect("/");
-  });
+  }
 });
 
 router.put("/burgers/:id", function (req, res) {
